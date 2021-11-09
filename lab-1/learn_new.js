@@ -148,6 +148,18 @@ const onImageLoad = () => {
     console.log('norm W[2000][5]  = ' + W[2000][5]);
     console.log('norm W[7499][11]  = ' + W[7499][11]);
 
+    // Матрица весов на втором слое
+    let Wt = [];
+    for(let i = 0; i < p; i++) {
+        let tempArr = [];
+        for(let j = 0; j < N; j++)
+            tempArr.push(W[j][i]);
+        Wt.push(tempArr);
+    }
+    console.log('Wt[0][0]  = ' + Wt[0][0]);
+    console.log('Wt[5][2000]  = ' + Wt[5][2000]);
+    console.log('Wt[11][7499]  = ' + Wt[11][7499]);
+
 
 
 }
