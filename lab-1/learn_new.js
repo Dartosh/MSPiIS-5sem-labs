@@ -122,6 +122,32 @@ const onImageLoad = () => {
     console.log('X[0][0]  = ' + X[0][0]);
     console.log('X[99][7499]  = ' + X[99][7499]);
 
+    // Создание матрицы весов для первого слоя:
+    let W = [];
+    for(let i = 0; i < N; i++) {
+        let tempArr = [];
+        for(let j = 0; j < p; j++)
+            tempArr.push((Math.random() - 1) / 5);
+        W.push(tempArr);
+    }
+    console.log('W[0][0]  = ' + W[0][0]);
+    console.log('W[2000][5]  = ' + W[2000][5]);
+    console.log('W[7499][11]  = ' + W[7499][11]);
+
+
+    // Нормализация матрицы весов для первого слоя (W):
+    for(let i = 0; i < p; i++) {
+        let sum = 0;
+        for(let j = 0; j < N; j++)
+            sum += W[j][i] * W[j][i];
+        sum = Math.sqrt(sum);
+        for(let j = 0; j < N; j++)
+            W[j][i] = W[j][i] / sum;
+    }
+    console.log('norm W[0][0]  = ' + W[0][0]);
+    console.log('norm W[2000][5]  = ' + W[2000][5]);
+    console.log('norm W[7499][11]  = ' + W[7499][11]);
+
 
 
 }
