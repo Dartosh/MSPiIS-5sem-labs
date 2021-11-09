@@ -173,7 +173,115 @@ const onImageLoad = () => {
     console.log('Wt[5][2000]  = ' + Wt[5][2000]);
     console.log('Wt[11][7499]  = ' + Wt[11][7499]);
 
+    const STEP_INIT_CONST = 500;
+    let Y = [];     // size: p
+    let _X = [];    // size: N
+    let dX = [];    // size: N
+    let Eq = [];    // size: L
 
+    let iterationCount = 0;
+    let alphaSecondLayer;
+
+    //do {
+        let E = 0;
+
+        // Обучение сети
+        for(let q = 0; q < L; q++) {
+            alphaSecondLayer = 0;
+            for(let i = 0; i < p; i++)
+                Y[i] = 0;
+            for(let i = 0; i < N; i++)
+                _X[i] = 0;
+            for(let i = 0; i < N; i++)
+                Eq[q] = 0;
+
+            // Коэффициент обучения для второго слоя:
+
+            alphaSecondLayer = STEP_INIT_CONST;
+
+            for(let i = 0; i < p; i++)
+                alphaSecondLayer += (Y[i] * Y[i]);
+
+            alphaSecondLayer = 1 / alphaSecondLayer;
+
+            let Xq = X[q];
+            // let Xq = [];
+            // for(let i = 0; i < N; i++)
+            //     Xq.push(X[q][i]);
+            //Xq[2] = 0;
+            // console.log('Xq[2] = ' + Xq[2]);
+            // console.log('X[q][2] = ' + X[q][2]);
+
+            for(let i = 0; i < p; i++) {
+                for (let j = 0; j < N; j++) {
+                    Y[i] += Xq[j] * W[j][i];
+                }
+            }
+            for(let i = 0; i < N; i++) {
+                for(let j = 0; j < p; j++) {
+                    _X[i] += Y[j] * Wt[j][i];
+                }
+            }
+            for(let i = 0; i < N; i++) {
+                dX[i] = _X[i] - X[q][i];
+            }
+
+            // Обучение нейровов рецепторного (первого) слоя
+
+            for(let j = 0; j < p; j++) {
+                let temp = 0;
+                for(let k = 0; k < N; k++) {
+                    temp += dX[k] * Wt[j][k];
+                }
+                for(let i = 0; i < N; i++) {
+                    W[i][j] -= (alphaSecondLayer * Xq[i] * temp);
+                }
+            }
+
+            // Нормализация весов между первым и скрытым слоями
+
+            for(let i = 0; i < p; i++) {
+                let sum = 0;
+                for (let j = 0; j < N; j++) {
+                    sum += W[j][i] * W[j][i];
+                }
+                sum = Math.sqrt(sum);
+                for (let j = 0; j < N; j++) {
+                    W[j][i] = W[j][i] / sum;
+                }
+            }
+
+            // Корректировка весов на втором слое
+
+            for(let i = 0; i < p; i++) {
+                for(let j = 0; j < N; j++) {
+                    Wt[i][j] -= alphaSecondLayer * Y[i] * dX[j];
+                }
+            }
+
+            //Нормализация весов между скрытым и выходным слоями
+
+            for(let i = 0; i < N; i++) {
+                let sum = 0;
+                for (let j = 0; j < p; j++) {
+                    sum += Wt[j][i] * Wt[j][i];
+                }
+                sum = Math.sqrt(sum);
+                for(let j = 0; j < p; j++) {
+                    Wt[j][i] = Wt[j][i] / sum;
+                }
+            }
+        }
+
+        //for(let q = 0; q<)
+
+
+
+    console.log('\nY[0] = ' + Y[0]);
+    console.log('Y[11] = ' + Y[11]);
+    console.log('_X[0] = ' + _X[0]);
+    console.log('_X[7499] = ' + _X[7499]);
+    //}while(true)
 }
 
 //document.onload(onImageLoad);
