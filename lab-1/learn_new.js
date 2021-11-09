@@ -130,7 +130,7 @@ const onImageLoad = () => {
             tempArr.push((Math.random() - 1) / 5);
         W.push(tempArr);
     }
-    console.log('W[0][0]  = ' + W[0][0]);
+    console.log('\nW[0][0]  = ' + W[0][0]);
     console.log('W[2000][5]  = ' + W[2000][5]);
     console.log('W[7499][11]  = ' + W[7499][11]);
 
@@ -156,10 +156,22 @@ const onImageLoad = () => {
             tempArr.push(W[j][i]);
         Wt.push(tempArr);
     }
-    console.log('Wt[0][0]  = ' + Wt[0][0]);
+    console.log('\nWt[0][0]  = ' + Wt[0][0]);
     console.log('Wt[5][2000]  = ' + Wt[5][2000]);
     console.log('Wt[11][7499]  = ' + Wt[11][7499]);
 
+    // Нормализация матрицы Wt
+    for(let i = 0; i < N; i++) {
+        let sum = 0;
+        for(let j = 0; j < p; j++)
+            sum += Wt[j][i] * Wt[j][i];
+        sum = Math.sqrt(sum);
+        for(let j = 0; j < p; j++)
+            Wt[j][i] = Wt[j][i] / sum;
+    }
+    console.log('Wt[0][0]  = ' + Wt[0][0]);
+    console.log('Wt[5][2000]  = ' + Wt[5][2000]);
+    console.log('Wt[11][7499]  = ' + Wt[11][7499]);
 
 
 }
