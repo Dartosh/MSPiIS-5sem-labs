@@ -74,7 +74,7 @@ const onImageLoad = () => {
     const rectangleWidth = inputData.xSize;
     const rectangleHeight = inputData.ySize;
     const P = inputData.P;
-    const err = inputData.error;
+    let err = inputData.error;
 
 // Матрица со значениями RGB пикселей
     const matrixRGB = matrix;
@@ -206,6 +206,7 @@ const onImageLoad = () => {
 
     while(true)
     {
+        err = 0;
         amountOfIterations++;
 
         for(let i = 0; i < amountOfBlocks; i++)
@@ -249,7 +250,7 @@ const onImageLoad = () => {
         {
             for(let j = 0; j < N; j++)
             {
-                E += deltaX[i][j] * deltaX[i][j];
+                E += deltaX[0][j] * deltaX[0][j];
             }
         }
         console.log(`Medium error: ${E}\n`);

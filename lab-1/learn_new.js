@@ -1,8 +1,27 @@
 // ЭТАП 1
 // Извлечение значения RGB каждого пикселя
 
+// ПЕРЕМЕННЫЕ И КОНСТАНТЫ
+let m;          // Кол-во прямоугольников по-горизонтали
+let n;          // Кол-во прямоугольников по-вертикали
+let p;          // Количество нейронов скрытого слоя
+
+let e;          // Максимально допустимая ошибка
+const S = 3;
+
+let width;      // Ширина изображегтя
+let height;     // Высота изображения
+
+let w;          // Ширина прямоугольников
+let h;          // Высота прямоугольников
+
+let L;          // Количество прямоугольников
+let N;          // Длина образа
+
+
+
 let img = new Image(); //Объект типа Image
-img.src = './d5.jpg'; //Путь к изображению
+img.src = './d6.jpg'; //Путь к изображению
 const matrix = []; //Матрица для хранения строк пикселей
 
 // []
@@ -20,6 +39,7 @@ const ctx = canvas.getContext('2d');
 const onImageLoad = () => {
     ctx.drawImage(img, 0, 0);
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    let data = imageData.data;
 
     for (let x = 0; x < canvas.width; x++) {
 
@@ -39,7 +59,7 @@ const onImageLoad = () => {
                 blue: b,
             }
 
-            const color = `${r}-${g}-${b}`;
+            // const color = `${r}-${g}-${b}`;
             column.push(pixel);
         }
         matrix.push(column); // Матрица пикселей с rgb
@@ -56,44 +76,43 @@ const onImageLoad = () => {
     document.body.appendChild(output);*/
 
     let inputData = {
-        xSize: 50,
-        ySize: 50,
+        xSize: 4,
+        ySize: 4,
         P: 12,
-        error: 600,
+        error: 1000,
     };
 
-    let width = matrix[1].length;
+    width = canvas.width;
     console.log('width = ' + width);
-    let height = matrix.length;
+    height = canvas.height;
     console.log('height = ' + height);
 
     // n:
-    let n = inputData.xSize;
+    n = inputData.xSize;
     console.log('n = ' + n);
     // m:
-    let m = inputData.ySize;
+    m = inputData.ySize;
     console.log('m = ' + m);
     // Количество нейронов скрытого слоя:
-    let p = inputData.P;
+    p = inputData.P;
     console.log('p = ' + p);
     // Максимально допустимая ошибка:
-    let e = inputData.error;
+    e = inputData.error;
     console.log('e = ' + e);
 
     // Ширина прямоугольника:
-    let w = width / n;
+    w = width / n;
     console.log('w = ' + w);
     // Высота прямоугольника:
-    let h = height / m;
+    h = height / m;
     console.log('h = ' + h);
 
-    let S = 3;
     // Количество прямоугольников:
-    let L = w * h;
+    L = w * h;
     console.log('L = ' + L);
 
     // Длина образа:
-    let N = n * m * S;
+    N = n * m * S;
     console.log('N = ' + N);
 
 
@@ -119,8 +138,8 @@ const onImageLoad = () => {
             }
         }
     }
-    console.log('X[0][0]  = ' + X[0][0]);
-    console.log('X[99][7499]  = ' + X[99][7499]);
+    // console.log('X[0][0]  = ' + X[0][0]);
+    // console.log('X[99][7499]  = ' + X[99][7499]);
 
     // Создание матрицы весов для первого слоя:
     let W = [];
@@ -130,9 +149,9 @@ const onImageLoad = () => {
             tempArr.push((Math.random() - 1) / 5);
         W.push(tempArr);
     }
-    console.log('\nW[0][0]  = ' + W[0][0]);
-    console.log('W[2000][5]  = ' + W[2000][5]);
-    console.log('W[7499][11]  = ' + W[7499][11]);
+    // console.log('\nW[0][0]  = ' + W[0][0]);
+    // console.log('W[2000][5]  = ' + W[2000][5]);
+    // console.log('W[7499][11]  = ' + W[7499][11]);
 
 
     // Нормализация матрицы весов для первого слоя (W):
@@ -144,9 +163,9 @@ const onImageLoad = () => {
         for(let j = 0; j < N; j++)
             W[j][i] = W[j][i] / sum;
     }
-    console.log('norm W[0][0]  = ' + W[0][0]);
-    console.log('norm W[2000][5]  = ' + W[2000][5]);
-    console.log('norm W[7499][11]  = ' + W[7499][11]);
+    // console.log('norm W[0][0]  = ' + W[0][0]);
+    // console.log('norm W[2000][5]  = ' + W[2000][5]);
+    // console.log('norm W[7499][11]  = ' + W[7499][11]);
 
     // Матрица весов на втором слое
     let Wt = [];
@@ -156,9 +175,9 @@ const onImageLoad = () => {
             tempArr.push(W[j][i]);
         Wt.push(tempArr);
     }
-    console.log('\nWt[0][0]  = ' + Wt[0][0]);
-    console.log('Wt[5][2000]  = ' + Wt[5][2000]);
-    console.log('Wt[11][7499]  = ' + Wt[11][7499]);
+    // console.log('\nWt[0][0]  = ' + Wt[0][0]);
+    // console.log('Wt[5][2000]  = ' + Wt[5][2000]);
+    // console.log('Wt[11][7499]  = ' + Wt[11][7499]);
 
     // Нормализация матрицы Wt
     for(let i = 0; i < N; i++) {
@@ -169,9 +188,9 @@ const onImageLoad = () => {
         for(let j = 0; j < p; j++)
             Wt[j][i] = Wt[j][i] / sum;
     }
-    console.log('Wt[0][0]  = ' + Wt[0][0]);
-    console.log('Wt[5][2000]  = ' + Wt[5][2000]);
-    console.log('Wt[11][7499]  = ' + Wt[11][7499]);
+    // console.log('Wt[0][0]  = ' + Wt[0][0]);
+    // console.log('Wt[5][2000]  = ' + Wt[5][2000]);
+    // console.log('Wt[11][7499]  = ' + Wt[11][7499]);
 
     const STEP_INIT_CONST = 500;
     let Y = [];     // size: p
@@ -182,12 +201,13 @@ const onImageLoad = () => {
     let iterationCount = 0;
     let alphaSecondLayer;
 
-    //do {
-        let E = 0;
+    let E = 0;
 
+    //do {
+        E = 0;
         // Обучение сети
         for(let q = 0; q < L; q++) {
-            alphaSecondLayer = 0;
+            //alphaSecondLayer = 0.001;
             for(let i = 0; i < p; i++)
                 Y[i] = 0;
             for(let i = 0; i < N; i++)
@@ -204,7 +224,8 @@ const onImageLoad = () => {
 
             alphaSecondLayer = 1 / alphaSecondLayer;
 
-            let Xq = X[q];
+
+            //let Xq = X[q];
             // let Xq = [];
             // for(let i = 0; i < N; i++)
             //     Xq.push(X[q][i]);
@@ -214,7 +235,7 @@ const onImageLoad = () => {
 
             for(let i = 0; i < p; i++) {
                 for (let j = 0; j < N; j++) {
-                    Y[i] += Xq[j] * W[j][i];
+                    Y[i] += X[q][j] * W[j][i];
                 }
             }
             for(let i = 0; i < N; i++) {
@@ -234,7 +255,7 @@ const onImageLoad = () => {
                     temp += dX[k] * Wt[j][k];
                 }
                 for(let i = 0; i < N; i++) {
-                    W[i][j] -= (alphaSecondLayer * Xq[i] * temp);
+                    W[i][j] -= (alphaSecondLayer * X[q][i] * temp);
                 }
             }
 
@@ -259,7 +280,7 @@ const onImageLoad = () => {
                 }
             }
 
-            //Нормализация весов между скрытым и выходным слоями
+            // Нормализация весов между скрытым и выходным слоями
 
             for(let i = 0; i < N; i++) {
                 let sum = 0;
@@ -273,15 +294,101 @@ const onImageLoad = () => {
             }
         }
 
-        //for(let q = 0; q<)
+        // Вычисление ошибки
+
+        for(let q = 0; q < L; q++) {
+            for(let i = 0; i < p; i++) {
+                Y[i] = 0;
+            }
+            for(let i = 0; i < N; i++) {
+                _X[i] = 0;
+            }
+            // for(let i = 0; i < N; i++) {
+            //     Eq[q] = 0;
+            // }
+            Eq[q] = 0;
+            for(let i = 0; i < p; i++) {
+                for(let j = 0; j < N; j++) {
+                    Y[i] += X[q][j] * W[j][i];
+                }
+            }
+            for(let i = 0; i < N; i++) {
+                for(let j = 0; j < p; j++) {
+                    _X[i] += Y[j] * Wt[j][i];
+                }
+            }
+            for(let i = 0; i < N; i++) {
+                dX[i] = _X[i] - X[q][i];
+            }
+            for(let i = 0; i < N; i++) {
+                Eq[q] += (dX[i] * dX[i]);
+            }
+        }
+        for(let q = 0; q < L; q++) {
+            E += Eq[q];
+        }
+
+        // for(let i = 0; i < L; i++)
+        // {
+        //     for(let j = 0; j < N; j++)
+        //     {
+        //         E += dX[j] * dX[j];
+        //     }
+        // }
+
+        iterationCount++;
+
+        console.log(`\nIteration: ${iterationCount} | Error: ${E}`);
+
+    //}while(E >= e);
+
+    console.log(`\nFinish error: ${E}\nIterations: ${iterationCount}\nZ: ${(N * L) / ((N + L) * p + 2)}`);
 
 
+    // Восстановление картинки
 
-    console.log('\nY[0] = ' + Y[0]);
-    console.log('Y[11] = ' + Y[11]);
-    console.log('_X[0] = ' + _X[0]);
-    console.log('_X[7499] = ' + _X[7499]);
-    //}while(true)
+    //let data2 = ctx.getImageData(0,0, img.width,img.height);
+
+    //let newData = ctx.createImageData(img.width,img.height);
+
+    console.log(`_X length =  ${_X.length}`);
+    for(let q = 0; q < L; q++) {
+        for(let i = 0; i < p; i++) {
+            Y[i] = 0;
+        }
+        for(let i = 0; i < N; i++) {
+            _X[q] = 0;
+        }
+        for(let i = 0; i < p; i++) {
+            for(let j = 0; j < N; j++) {
+                Y[i] += X[q][j] * W[j][i];
+            }
+        }
+        for(let i = 0; i < N; i++) {
+            for(let j = 0; j < p; j++) {
+                _X[i] += Y[j] * Wt[j][i];
+            }
+        }
+        for(let i = 0; i < n; i++) {
+            for(let j = 0; j < m; j++) {
+                //const start = 4 * (i * canvas.width + j);
+                for(let k = 0; k < 4; k++) {
+                    let pixel = Math.floor(255 * ((_X[(n * i + j) * S + k] + 1) / 2));
+                    if (pixel > 255) {
+                        pixel = 255;
+                    }
+                    if (pixel < 0) {
+                        pixel = 0;
+                    }
+                    //newData.data[start + k] = pixel;
+
+                }
+            }
+        }
+    }
+    //ctx.putImageData(newData,0,0);
+
+    console.log('Finish');
 }
 
 //document.onload(onImageLoad);
