@@ -18,6 +18,19 @@ let h;          // Высота прямоугольников
 let L;          // Количество прямоугольников
 let N;          // Длина образа
 
+let X;          // Новая матрица
+let W;          // Матрица весов для первого слоя
+let Wt;         // Матрица весов для второго слоя
+
+const STEP_INIT_CONST = 500;
+let Y;          // size: p
+let _X;         // size: N
+let dX;         // size: N
+let Eq;         // size: L
+
+let alphaSecondLayer = 0.001; // Коэффициент обучения для второго слоя:
+let alphaFirstLayer;
+let E;          // Текущая ошибка
 
 
 let img = new Image(); //Объект типа Image
@@ -76,9 +89,9 @@ const onImageLoad = () => {
     document.body.appendChild(output);*/
 
     let inputData = {
-        xSize: 4,
-        ySize: 4,
-        P: 12,
+        nCount: 8,
+        mCount: 8,
+        P: 16,
         error: 1000,
     };
 
@@ -88,10 +101,10 @@ const onImageLoad = () => {
     console.log('height = ' + height);
 
     // n:
-    n = inputData.xSize;
+    n = inputData.nCount;
     console.log('n = ' + n);
     // m:
-    m = inputData.ySize;
+    m = inputData.mCount;
     console.log('m = ' + m);
     // Количество нейронов скрытого слоя:
     p = inputData.P;
@@ -116,7 +129,19 @@ const onImageLoad = () => {
     console.log('N = ' + N);
 
 
-    let X = [];
+    alphaFirstLayer = [];
+
+    // Коэффициент обучения для первого слоя
+    for(let q = 0; q < L; q++) {
+        alphaFirstLayer[q] = STEP_INIT_CONST;
+        for(let i = 0; i < N; i++) {
+            alphaFirstLayer[q] += (X[q][i] * X[q][i]);
+        }
+        alphaFirstLayer[q] = 1 / alphaFirstLayer[q];
+    }
+
+
+    X = [];
     for(let i = 0; i < L; i++) {
         let tempArr = [];
         for(let j = 0; j < N; j++)
@@ -142,7 +167,7 @@ const onImageLoad = () => {
     // console.log('X[99][7499]  = ' + X[99][7499]);
 
     // Создание матрицы весов для первого слоя:
-    let W = [];
+    W = [];
     for(let i = 0; i < N; i++) {
         let tempArr = [];
         for(let j = 0; j < p; j++)
@@ -168,7 +193,7 @@ const onImageLoad = () => {
     // console.log('norm W[7499][11]  = ' + W[7499][11]);
 
     // Матрица весов на втором слое
-    let Wt = [];
+    Wt = [];
     for(let i = 0; i < p; i++) {
         let tempArr = [];
         for(let j = 0; j < N; j++)
@@ -192,16 +217,14 @@ const onImageLoad = () => {
     // console.log('Wt[5][2000]  = ' + Wt[5][2000]);
     // console.log('Wt[11][7499]  = ' + Wt[11][7499]);
 
-    const STEP_INIT_CONST = 500;
-    let Y = [];     // size: p
-    let _X = [];    // size: N
-    let dX = [];    // size: N
-    let Eq = [];    // size: L
+    Y = [];     // size: p
+    _X = [];    // size: N
+    dX = [];    // size: N
+    Eq = [];    // size: L
 
     let iterationCount = 0;
-    let alphaSecondLayer;
 
-    let E = 0;
+
 
     //do {
         E = 0;
@@ -217,12 +240,12 @@ const onImageLoad = () => {
 
             // Коэффициент обучения для второго слоя:
 
-            alphaSecondLayer = STEP_INIT_CONST;
-
-            for(let i = 0; i < p; i++)
-                alphaSecondLayer += (Y[i] * Y[i]);
-
-            alphaSecondLayer = 1 / alphaSecondLayer;
+            // alphaSecondLayer = STEP_INIT_CONST;
+            //
+            // for(let i = 0; i < p; i++)
+            //     alphaSecondLayer += (Y[i] * Y[i]);
+            //
+            // alphaSecondLayer = 1 / alphaSecondLayer;
 
 
             //let Xq = X[q];
