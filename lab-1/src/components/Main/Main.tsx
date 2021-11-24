@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import './Main.css'
-
+import StartImg from "../ImageBlocks/StartImg";
+import FinishImg from "../ImageBlocks/FinishImg";
 
 class Main extends Component {
     state = {
@@ -8,6 +9,8 @@ class Main extends Component {
         w: '',
         N: '',
         err: '',
+        startImage: null,
+        finishImage: null,
     }
 
     handleHeightChange = ( e: React.ChangeEvent<HTMLInputElement> ) => {
@@ -44,6 +47,7 @@ class Main extends Component {
             N: '',
             err: '',
         })
+        //new MainFunc(w, h, N,err);
     }
 
 
@@ -68,18 +72,8 @@ class Main extends Component {
                             <p>Lorem ipsum dolor sit amet.</p>
                         </div>
                     </div>
-                    <div className="startImage">
-                        <h4>Start image:</h4>
-                        <div className="imageZone">
-
-                        </div>
-                    </div>
-                    <div className="finishImage">
-                        <h4>Result image:</h4>
-                        <div className="imageZone">
-
-                        </div>
-                    </div>
+                    <StartImg />
+                    <FinishImg />
                 </div>
             </Fragment>
         )
