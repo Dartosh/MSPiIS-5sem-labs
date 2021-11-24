@@ -2,6 +2,7 @@ import React, {Component, Fragment} from 'react';
 import './Main.css'
 import StartImg from "../ImageBlocks/StartImg";
 import FinishImg from "../ImageBlocks/FinishImg";
+import Start from "../../Classes/main";
 
 class Main extends Component {
     state = {
@@ -41,13 +42,7 @@ class Main extends Component {
         e.preventDefault();
         const { h, w, N, err } = this.state;
         console.log(`Block H: ${h}\nBlock W: ${w}\nNumber of neurons: ${N}\nMinimal error: ${err}`);
-        this.setState({
-            h: '',
-            w: '',
-            N: '',
-            err: '',
-        })
-        //new MainFunc(w, h, N,err);
+        new Start(w, h, N,err);
     }
 
 

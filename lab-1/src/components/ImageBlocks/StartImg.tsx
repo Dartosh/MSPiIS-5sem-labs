@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import image from "../images/losyash_256x256.bmp";
+import image from "../images/example3-512.png";
 
 export default class StartImg extends Component {
     render() {
