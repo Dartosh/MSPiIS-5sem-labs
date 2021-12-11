@@ -24,9 +24,6 @@ export default class Main {
 
     }
 
-    /**
-     * @param {ImageObject} image
-     */
     learning(image: ImageObject) {
         let iteration = 1;
 
