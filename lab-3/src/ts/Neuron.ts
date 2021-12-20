@@ -20,7 +20,6 @@ class Neuron {
         let sum: number = 0;
         for(let i: number = 0; i < inputs.length; i++)
             sum += inputs[i] * this.weights[i];
-        this.sum = sum;
         //console.log(`act: ${this.activation(sum)}`);
         return this.activation(sum) - this.threshold;
     }
