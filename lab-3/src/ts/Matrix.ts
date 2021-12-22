@@ -1,5 +1,17 @@
 export default class Matrix {
 
+    static createMatrix(rows: number, cols: number): number[][] {
+        let res: number[][] = []
+        for(let i:number = 0; i < rows; i++) {
+            let temp: number[] = []
+            for(let j: number = 0; j < cols; j++) {
+                temp.push(0);
+            }
+            res.push(temp);
+        }
+        return res;
+    }
+
     static transpose(matrix: number[][]) {
         let transposeMatrix: number[][] = [];
 
@@ -60,6 +72,20 @@ export default class Matrix {
         return resultMatrix;
     }
 
+    static minusMatrix(matrix1: number[][], matrix2: number[][]) {
+        let resultMatrix: number[][] = [];
+
+        for (let i = 0; i < matrix1.length; i++) {
+            resultMatrix[i] = [];
+
+            for (let j = 0; j < matrix1[i].length; j++) {
+                resultMatrix[i][j] = matrix1[i][j] - matrix2[i][j];
+            }
+        }
+
+        return resultMatrix;
+    }
+
     static multipleSkalar(matrix: number[][], multiplier: number) {
         let resultMatrix: number[][] = [];
 
@@ -88,6 +114,20 @@ export default class Matrix {
         return resultMatrix;
     }
 
+    static sum(matrix1: number[][], matrix2: number[][]) {
+        let resultMatrix: number[][] = [];
+
+        for (let i = 0; i < matrix1.length; i++) {
+            resultMatrix[i] = [];
+
+            for (let j = 0; j < matrix1[i].length; j++) {
+                resultMatrix[i][j] = matrix1[i][j] + matrix2[i][j];
+            }
+        }
+
+        return resultMatrix;
+    }
+
     static vectorSum(matrix: number[][]) {
         if (matrix.length > 1) {
             return 0;
@@ -100,6 +140,14 @@ export default class Matrix {
         }
 
         return sum;
+    }
+
+    static setValue(matrix: number[][], numb: number): number[][] {
+        let res: number[][] = matrix;
+        for(let i: number = 0; i < res.length; i++)
+            for(let j: number = 0; j < res[i].length; j++)
+                res[i][j] = numb;
+        return res;
     }
 
 }

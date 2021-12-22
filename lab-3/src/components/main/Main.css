@@ -1,0 +1,148 @@
+main {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 1000px;
+}
+
+article {
+    padding: 20px;
+    min-width: 300px;
+    background-color: darkgray;
+    border-radius: 10px;
+    margin: 30px 15px 0 15px;
+}
+
+
+h4 {
+    display: block;
+    margin: 0;
+    color: #282c34;
+    text-align: center;
+}
+
+ul {
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    align-items: center;
+    height: 30px;
+    background-color: #282c34;
+    color: darkgray;
+    min-width: 40px;
+    border-radius: 5px;
+    font-weight: bold;
+    margin: 3px;
+}
+
+form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    width: 450px;
+}
+
+form label {
+    display: block;
+    font-weight: bold;
+    color: #282c34;
+    width: 210px;
+}
+
+form input {
+    margin-top: 7px;
+    margin-bottom: 7px;
+    width: 180px;
+    height: 25px;
+    align-items: center;
+
+    border-radius: 5px;
+    border: #282c34 solid 2px;
+    font-weight: bold;
+    color: #282c34;
+    text-align: center;
+}
+
+form button {
+    width: 100px;
+
+    border-radius: 5px;
+    border: #282c34 solid 2px;
+    font-weight: bold;
+    color: darkgray;
+    background-color: #282c34;
+    height: 30px;
+    transition-duration: 0.2s;
+}
+
+form button:hover {
+    border: #282c34 solid 2px;
+    color: #282c34;
+    background-color: darkgray;
+    height: 30px;
+    cursor: pointer;
+}
+
+.input {
+    min-width: 200px;
+    width: 200px;
+}
+
+.input form {
+    width: 180px;
+    margin: 10px auto;
+}
+
+.input button {
+    width: 80px;
+    margin: 5px;
+}
+
+.input form {
+    width: 180px;
+}
+
+.start-result {
+    width: 650px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+
+}
+
+.start-result div {
+    width: 100%;
+    display: flex;
+}
+
+.start-result h4 {
+    min-width: 110px;
+    display: flex;
+    align-items: center;
+}
+
+.start-result ul {
+    min-width: 350px;
+    justify-content: left;
+}
+
+.green {
+    background-color: #89ff64;
+}
+
+.orange {
+    background-color: #ffb55c;
+}
+
+.red {
+    background-color: #ff5042;
+}
